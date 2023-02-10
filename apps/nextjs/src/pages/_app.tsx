@@ -1,19 +1,31 @@
 import "../styles/globals.css";
 import type { AppType } from "next/app";
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 
 import { api } from "~/utils/api";
 
-const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => {
+const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
   return (
-    <SessionProvider session={session}>
+    <ClerkProvider {...pageProps}>
+      {/* <SessionProvider session={session}> */}
       <Component {...pageProps} />
-    </SessionProvider>
+      {/* </SessionProvider> */}
+    </ClerkProvider>
   );
 };
+// const MyApp: AppType<{ session: Session | null }> = ({
+//   Component,
+//   pageProps: { ...pageProps },
+// }) => {
+//   return (
+//     <ClerkProvider {...pageProps}>
+//       {/* <SessionProvider session={session}> */}
+//       <Component {...pageProps} />
+//       {/* </SessionProvider> */}
+//     </ClerkProvider>
+//   );
+// };
 
 export default api.withTRPC(MyApp);

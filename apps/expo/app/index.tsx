@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack, useRouter } from "expo-router";
+import { useAuth, useSession, useSignIn, useSignUp } from "@clerk/clerk-expo";
 import { FlashList } from "@shopify/flash-list";
 
 import { api, type RouterOutputs } from "../src/utils/api";
@@ -90,6 +91,9 @@ const Index = () => {
   const deletePostMutation = api.post.delete.useMutation({
     onSettled: () => postQuery.refetch(),
   });
+  const { session } = useSession();
+  const { signOut } = useAuth();
+  // console.log({ session });
 
   return (
     <SafeAreaView className="bg-[#1F104A]">
@@ -103,6 +107,11 @@ const Index = () => {
         <Button
           onPress={() => void postQuery.refetch()}
           title="Refresh posts"
+          color={"#f472b6"}
+        />
+        <Button
+          onPress={() => void signOut()}
+          title="Sign Out"
           color={"#f472b6"}
         />
 

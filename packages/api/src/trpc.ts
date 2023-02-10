@@ -12,6 +12,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 import { getServerSession, type Session } from "@acme/auth";
 import { prisma } from "@acme/db";
+import { createTRPCContext } from "./context";
 
 /**
  * 1. CONTEXT
@@ -47,16 +48,17 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const { req, res } = opts;
 
-  // Get the session from the server using the unstable_getServerSession wrapper function
-  const session = await getServerSession({ req, res });
+// export const createTRPCContext = async (opts: CreateNextContextOptions) => {
+//   const { req, res } = opts;
 
-  return createInnerTRPCContext({
-    session,
-  });
-};
+//   // Get the session from the server using the unstable_getServerSession wrapper function
+//   const session = await getServerSession({ req, res });
+
+//   return createInnerTRPCContext({
+//     session,
+//   });
+// };
 
 /**
  * 2. INITIALIZATION
@@ -104,14 +106,26 @@ export const publicProcedure = t.procedure;
  * Reusable middleware that enforces users are logged in before running the
  * procedure
  */
-const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session?.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+// const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
+//   if (!ctx.session?.user) {
+//     throw new TRPCError({ code: "UNAUTHORIZED" });
+//   }
+//   return next({
+//     ctx: {
+//       // infers the `session` as non-nullable
+//       session: { ...ctx.session, user: ctx.session.user },
+//     },
+//   });
+// });
+
+const enforceUserIsAuthed = t.middleware(({ next, ctx }) => {
+  if (!ctx.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "Not authenticated" });
   }
+  // console.log({ ctxUser: ctx.user });
   return next({
     ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
+      user: ctx.user,
     },
   });
 });
