@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack, useRouter } from "expo-router";
-import { useAuth, useSession } from "@clerk/clerk-expo";
+import { useAuth } from "@clerk/clerk-expo";
 import { FlashList } from "@shopify/flash-list";
 
 import { api, type RouterOutputs } from "../src/utils/api";
@@ -91,7 +91,7 @@ const Index = () => {
   const deletePostMutation = api.post.delete.useMutation({
     onSettled: () => postQuery.refetch(),
   });
-  const { session } = useSession();
+  // const { session } = useSession();
   const { signOut } = useAuth();
   // console.log({ session });
 
