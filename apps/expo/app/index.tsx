@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack, useRouter } from "expo-router";
-import { useAuth, useSession, useSignIn, useSignUp } from "@clerk/clerk-expo";
+import { useAuth, useSession } from "@clerk/clerk-expo";
 import { FlashList } from "@shopify/flash-list";
 
 import { api, type RouterOutputs } from "../src/utils/api";
