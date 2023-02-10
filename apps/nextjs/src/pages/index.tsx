@@ -3,7 +3,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { UserButton, useAuth } from "@clerk/nextjs";
-import { signIn, signOut } from "next-auth/react";
 
 import { api, type RouterOutputs } from "~/utils/api";
 

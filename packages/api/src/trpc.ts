@@ -7,11 +7,11 @@
  * The pieces you will need to use are documented accordingly near the end
  */
 import { TRPCError, initTRPC } from "@trpc/server";
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+// import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { getServerSession, type Session } from "@acme/auth";
-import { prisma } from "@acme/db";
+// import { getServerSession, type Session } from "@acme/auth";
+// import { prisma } from "@acme/db";
 import { createTRPCContext } from "./context";
 
 /**
@@ -23,9 +23,9 @@ import { createTRPCContext } from "./context";
  * processing a request
  *
  */
-type CreateContextOptions = {
-  session: Session | null;
-};
+// type CreateContextOptions = {
+//   session: Session | null;
+// };
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use
@@ -36,12 +36,12 @@ type CreateContextOptions = {
  * - trpc's `createSSGHelpers` where we don't have req/res
  * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  */
-const createInnerTRPCContext = (opts: CreateContextOptions) => {
-  return {
-    session: opts.session,
-    prisma,
-  };
-};
+// const createInnerTRPCContext = (opts: CreateContextOptions) => {
+//   return {
+//     session: opts.session,
+//     prisma,
+//   };
+// };
 
 /**
  * This is the actual context you'll use in your router. It will be used to
